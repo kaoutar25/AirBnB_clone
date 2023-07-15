@@ -81,13 +81,14 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
 
         class_name = args[0]
         if class_name not in self.classes:
             print("** class doesn't exist **")
+            return
+
+        if len(args) == 1:
+            print("** instance id missing **")
             return
         obj_id = args[1]
         storage = models.storage
@@ -109,13 +110,14 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
 
         class_name = args[0]
         if class_name not in self.classes:
             print("** class doesn't exist **")
+            return
+
+        if len(args) == 1:
+            print("** instance id missing **")
             return
         obj_id = args[1]
         storage = models.storage
@@ -159,6 +161,10 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
+        class_name = args[0]
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
         if len(args) == 1:
             print("** instance id missing **")
             return
@@ -169,10 +175,6 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
 
-        class_name = args[0]
-        if class_name not in self.classes:
-            print("** class doesn't exist **")
-            return
         obj_id = args[1]
         attr_name = args[2]
         attr_value = args[3].strip('"')
