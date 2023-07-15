@@ -139,8 +139,7 @@ class HBNBCommand(cmd.Cmd):
         objects = models.storage.all()
 
         if not args:
-            for obj in objects.values():
-                print(obj)
+            print([str(obj) for obj in objects.values()])
             return
 
         class_name = args[0]
@@ -148,9 +147,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        for obj in objects.values():
-            if obj.__class__.__name__ == class_name:
-                print(obj)
+        print([
+            str(obj) for obj in objects.values()
+            if obj.__class__.__name__ == class_name
+            ])
 
     def do_update(self, line):
         """
