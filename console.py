@@ -4,7 +4,6 @@ This module defines the command interpreter.
 """
 
 import cmd
-import os
 import shlex
 from datetime import datetime
 import models
@@ -50,10 +49,6 @@ class HBNBCommand(cmd.Cmd):
         Ignores empty lines.
         """
         pass
-
-    def do_clear(self, line):
-        """Clear the console."""
-        os.system('clear')
 
     def do_create(self, line):
         """
