@@ -10,6 +10,7 @@ import os
 from os import remove
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from models.__init__ import storage
 import pep8
 
 
