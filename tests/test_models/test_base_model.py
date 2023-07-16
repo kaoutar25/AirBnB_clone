@@ -11,6 +11,7 @@ import re
 import time
 import unittest
 import uuid
+import pep8
 
 
 class TestBaseModel(unittest.TestCase):
@@ -187,6 +188,13 @@ class TestBaseModel(unittest.TestCase):
             BaseModel.save(self, 98)
         msg = "save() takes 1 positional argument but 2 were given"
         self.assertEqual(str(e.exception), msg)
+
+    def test_pycodestyle_file_storage(self):
+        """Test that we conform to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
 
 if __name__ == '__main__':
