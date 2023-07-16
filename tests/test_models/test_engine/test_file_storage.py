@@ -20,8 +20,12 @@ class test_fileStorage(unittest.TestCase):
         obj = FileStorage()
         self.assertIsInstance(obj, FileStorage)
 
-    def test_docs(self):
+    def test_docstrings(self):
         """Test docstrings"""
+        self.assertIsNotNone(FileStorage.__doc__)
+
+    def test_docs(self):
+        """Test documentation"""
         self.assertIsNotNone(FileStorage.all.__doc__)
         self.assertIsNotNone(FileStorage.new.__doc__)
         self.assertIsNotNone(FileStorage.save.__doc__)
