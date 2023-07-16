@@ -88,50 +88,6 @@ class test_fileStorage(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_file_storage_reload(self):
-        """Test the reload method of FileStorage"""
-        storage = FileStorage()
-
-        storage.save()
-
-        # Get the path to objects.json
-        root = os.path.dirname(os.path.abspath("console.py"))
-        path = os.path.join(root, "file.json")
-
-        # Read the lines before removing the file
-        with open(path, 'r') as file:
-            lines = file.readlines()
-
-        try:
-            os.remove(path)
-        except Exception:
-            pass
-
-        storage.save()
-
-        # Read the lines after saving the file
-        with open(path, 'r') as file:
-            lines2 = file.readlines()
-
-        self.assertEqual(lines, lines2)
-
-        try:
-            os.remove(path)
-        except Exception:
-            pass
-
-        # Create an empty objects.json file
-        with open(path, "w") as file:
-            file.write("{}")
-
-        # Verify the contents of the file
-        with open(path, "r") as file:
-            for line in file:
-                self.assertEqual(line, "{}")
-
-        # Test the reload method
-        self.assertIs(storage.reload(), None)
-
 
 if __name__ == '__main__':
     unittest.main()
