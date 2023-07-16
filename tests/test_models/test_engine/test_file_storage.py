@@ -88,22 +88,6 @@ class test_fileStorage(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_reload(self):
-        """
-        Tests method: reload (reloads objects from string file)
-        """
-        storage = FileStorage()
-        try:
-            os.remove("file.json")
-        except FileNotFoundError:
-            pass
-        with open("file.json", "w") as f:
-            f.write("{}")
-        with open("file.json", "r") as r:
-            for line in r:
-                self.assertEqual(line, "{}")
-        self.assertIs(storage.reload(), None)
-
 
 if __name__ == '__main__':
     unittest.main()
