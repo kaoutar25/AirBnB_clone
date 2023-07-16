@@ -20,12 +20,16 @@ class test_fileStorage(unittest.TestCase):
 
     def test_docs(self):
         """Test docstrings"""
-        self.assertIsNotNone(FileStorage.all)
-        self.assertIsNotNone(FileStorage.new)
-        self.assertIsNotNone(FileStorage.save)
-        self.assertIsNotNone(FileStorage.reload)
+        self.assertIsNotNone(FileStorage.all.__doc__)
+        self.assertIsNotNone(FileStorage.new.__doc__)
+        self.assertIsNotNone(FileStorage.save.__doc__)
+        self.assertIsNotNone(FileStorage.reload.__doc__)
+        self.assertTrue(FileStorage.all.__doc__)
+        self.assertTrue(FileStorage.new.__doc__)
+        self.assertTrue(FileStorage.save.__doc__)
+        self.assertTrue(FileStorage.reload.__doc__)
 
-    def test_file_storage_all_method(self):
+    def test_all_method_contains_dict_of_base_model_objects(self):
         """FileStorage all method contains dict of BaseModel objs"""
         storage = FileStorage()
         storage_dict = storage.all()
@@ -33,7 +37,7 @@ class test_fileStorage(unittest.TestCase):
         for obj in storage_dict.values():
             self.assertIsInstance(obj, BaseModel)
 
-    def test_file_storage_new_method(self):
+    def test_new_method_adds_object_to_storage(self):
         """FileStorage new method adds object"""
         base = BaseModel()
         storage = FileStorage()
@@ -41,29 +45,29 @@ class test_fileStorage(unittest.TestCase):
         key = '{}.{}'.format(type(base).__name__, base.id)
         self.assertTrue(key in storage_dict.keys())
 
-    def test_file_storage_save_method(self):
+    def test_save_method_updates_objects_and_file(self):
         """FileStorage save method updates __objects
 
         Test if file already exists.
         with self.assertRaises(FileNotFoundError):
             open('file.json', 'r')
         """
-        base = BaseModel()
-        key = '{}.{}'.format(type(base).__name__, base.id)
-        base_updated_0 = base.updated_at
+        bm = BaseModel()
+        key = '{}.{}'.format(type(bm).__name__, bm.id)
+        bm_updated_0 = bm.updated_at
         storage = FileStorage()
-        objs_0 = storage.all()
-        dt_0 = objs_0[key].updated_at
+        obj = storage.all()
+        dict_1 = obj[key].updated_at
 
         sleep(0.0001)
-        base.save()
+        bm.save()
 
-        base_updated_1 = base.updated_at
-        objs_1 = storage.all()
-        dt_1 = objs_1[key].updated_at
+        bm_updated_1 = bm.updated_at
+        obj2 = storage.all()
+        dict_2 = obj2[key].updated_at
 
-        self.assertNotEqual(base_updated_1, base_updated_0)
-        self.assertNotEqual(dt_1, dt_0)
+        self.assertNotEqual(bm_updated_1, bm_updated_0)
+        self.assertNotEqual(dict_2, dict_1)
 
         try:
             with open('file.json', 'r'):
