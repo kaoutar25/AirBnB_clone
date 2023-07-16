@@ -9,7 +9,12 @@ import json
 import os
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 import pep8
 
 
@@ -87,6 +92,53 @@ class test_fileStorage(unittest.TestCase):
         result = pep8style.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
+
+    def test_check_json_loading(self):
+        """ Checks if methods from Storage Engine works."""
+
+        with open("file.json") as f:
+            dic = json.load(f)
+
+            self.assertEqual(isinstance(dic, dict), True)
+
+    def test_file_existence(self):
+        """
+        Checks if methods from Storage Engine works.
+        """
+
+        with open("file.json") as f:
+            self.assertTrue(len(f.read()) > 0)
+
+    def setUp(self):
+        """Sets up the class test"""
+
+        self.b1 = BaseModel()
+        self.a1 = Amenity()
+        self.c1 = City()
+        self.p1 = Place()
+        self.r1 = Review()
+        self.s1 = State()
+        self.u1 = User()
+        self.storage = FileStorage()
+        self.storage.save()
+        if os.path.exists("file.json"):
+            pass
+        else:
+            os.mknod("file.json")
+
+    def tearDown(self):
+        """Tears down the testing environment"""
+
+        del self.b1
+        del self.a1
+        del self.c1
+        del self.p1
+        del self.r1
+        del self.s1
+        del self.u1
+        del self.storage
+        if os.path.exists("file.json"):
+            os.remove("file.json")
 
 
 if __name__ == '__main__':
