@@ -7,7 +7,6 @@ import unittest
 from time import sleep
 import json
 import os
-from os import remove
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 import pep8
@@ -77,7 +76,7 @@ class test_fileStorage(unittest.TestCase):
 
         try:
             with open('file.json', 'r'):
-                remove('file.json')
+                os.remove('file.json')
         except FileNotFoundError:
             self.assertEqual(1, 2)
 
@@ -87,6 +86,22 @@ class test_fileStorage(unittest.TestCase):
         result = pep8style.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
+
+    def test_reload(self):
+        """
+        Tests method: reload (reloads objects from string file)
+        """
+        storage = FileStorage()
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
+        with open("file.json", "w") as f:
+            f.write("{}")
+        with open("file.json", "r") as r:
+            for line in r:
+                self.assertEqual(line, "{}")
+        self.assertIs(storage.reload(), None)
 
 
 if __name__ == '__main__':
