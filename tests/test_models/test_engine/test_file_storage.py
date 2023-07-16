@@ -9,6 +9,7 @@ import json
 from os import remove
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+import pep8
 
 
 class test_fileStorage(unittest.TestCase):
@@ -74,6 +75,13 @@ class test_fileStorage(unittest.TestCase):
                 remove('file.json')
         except FileNotFoundError:
             self.assertEqual(1, 2)
+
+    def test_pep8_conformance_file_storage(self):
+        """Test that we conform to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
 
 if __name__ == '__main__':
