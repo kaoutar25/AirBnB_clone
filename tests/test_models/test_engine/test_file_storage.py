@@ -88,6 +88,11 @@ class test_fileStorage(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
+    def test_file_storage_file_path(self):
+        """FileStorage __file_path attribute exists"""
+        storage = FileStorage()
+        self.assertIsNotNone(storage._FileStorage__file_path)
+
 
 if __name__ == '__main__':
     unittest.main()
