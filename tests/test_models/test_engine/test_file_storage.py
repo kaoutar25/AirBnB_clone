@@ -41,6 +41,7 @@ class test_fileStorage(unittest.TestCase):
         self.assertIsInstance(storage_dict, dict)
         for obj in storage_dict.values():
             self.assertIsInstance(obj, BaseModel)
+        self.assertIs(storage_dict, storage._FileStorage__objects)
 
     def test_new_method_adds_object_to_storage(self):
         """FileStorage new method adds object"""
