@@ -64,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
             obj = self.classes[class_name]()
             obj.save()
             print(obj.id)
-        except NameError:
+        except KeyError:
             print("** class doesn't exist **")
 
     def do_show(self, line):

@@ -7,10 +7,8 @@ import unittest
 from time import sleep
 import json
 import os
-from os import remove
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
-from models.__init__ import storage
 import pep8
 
 
@@ -43,6 +41,7 @@ class test_fileStorage(unittest.TestCase):
         self.assertIsInstance(storage_dict, dict)
         for obj in storage_dict.values():
             self.assertIsInstance(obj, BaseModel)
+        self.assertIs(storage_dict, storage._FileStorage__objects)
 
     def test_new_method_adds_object_to_storage(self):
         """FileStorage new method adds object"""
@@ -78,7 +77,7 @@ class test_fileStorage(unittest.TestCase):
 
         try:
             with open('file.json', 'r'):
-                remove('file.json')
+                os.remove('file.json')
         except FileNotFoundError:
             self.assertEqual(1, 2)
 
@@ -88,6 +87,11 @@ class test_fileStorage(unittest.TestCase):
         result = pep8style.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
+
+    def test_file_storage_file_path(self):
+        """FileStorage __file_path attribute exists"""
+        storage = FileStorage()
+        self.assertIsNotNone(storage._FileStorage__file_path)
 
 
 if __name__ == '__main__':
